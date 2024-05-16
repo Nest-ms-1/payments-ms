@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import Stripe from 'stripe'
-import { NAST_SERVICE, envs } from 'src/config'
+import { NATS_SERVICE, envs } from 'src/config'
 import { PaymentSessionDto } from './dto/payment-session.dto'
 import { Request, Response } from 'express'
 import { url } from 'inspector'
@@ -11,7 +11,7 @@ export class PaymentsService {
   private readonly logger = new Logger('Payment services')
   private readonly stripe = new Stripe(envs.stripeSecret)
 
-  constructor(@Inject(NAST_SERVICE) private readonly client: ClientProxy) {}
+  constructor(@Inject(NATS_SERVICE) private readonly client: ClientProxy) {}
 
   async createPaymentSession(paymentSessionDto: PaymentSessionDto) {
     const { currency, items, orderId } = paymentSessionDto
